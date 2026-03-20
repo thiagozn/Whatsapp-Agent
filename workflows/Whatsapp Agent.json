@@ -1,0 +1,620 @@
+{
+  "name": "Whatsapp Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202411,
+      "position": [
+        -592,
+        96
+      ],
+      "id": "929bad5a-41b5-4ed1-862b-f65724714688",
+      "name": "WAHA Trigger",
+      "webhookId": "4c9351c8-9233-4f78-a00e-60bd4b53622e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "569da4c9-cd5a-4d98-8138-4f21623318bc",
+              "leftValue": "={{ $json.payload.body }}",
+              "rightValue": "Start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        128
+      ],
+      "id": "a93897ac-1d45-4323-a7a6-ce4cf4defaef",
+      "name": "se Start"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g",
+          "mode": "list",
+          "cachedResultName": "Controle Agente IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "usuarios_ativos": "={{ $('WAHA Trigger').item.json.payload.from }}"
+          },
+          "matchingColumns": [
+            "usuarios_ativos"
+          ],
+          "schema": [
+            {
+              "id": "usuarios_ativos",
+              "displayName": "usuarios_ativos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -32,
+        96
+      ],
+      "id": "0494aa39-f88f-463e-91f4-de9178b0e6fe",
+      "name": "Cadastrar ID",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Bvh3R0LiIiPJTlTU",
+          "name": "google conta treino"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "=default",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "text": "Modo IA ativado. ",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        176,
+        96
+      ],
+      "id": "f8c92612-d467-4324-becc-73bfec783c77",
+      "name": "IA ativada",
+      "credentials": {
+        "wahaApi": {
+          "id": "bAZ36vEA49PrXSZ1",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f246a5b2-c7d1-49dc-9e47-6034afa82b22",
+              "leftValue": "={{ $json.payload.body }}",
+              "rightValue": "End",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        304
+      ],
+      "id": "d350518a-4af1-43ea-b4ed-a90a4822a8d0",
+      "name": "se End"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g",
+          "mode": "list",
+          "cachedResultName": "Controle Agente IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "usuarios_ativos",
+              "lookupValue": "={{ $('WAHA Trigger').item.json.payload.from }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        288
+      ],
+      "id": "5e17abb9-6ad4-4f33-a745-323092638238",
+      "name": "Verificar ID",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Bvh3R0LiIiPJTlTU",
+          "name": "google conta treino"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g",
+          "mode": "list",
+          "cachedResultName": "Controle Agente IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit#gid=0"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        304
+      ],
+      "id": "371e7008-d74a-4a85-9456-6e74a1460217",
+      "name": "Deletar ID",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Bvh3R0LiIiPJTlTU",
+          "name": "google conta treino"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "=default",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "text": "Modo Ia desativado.",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        640,
+        304
+      ],
+      "id": "8608e796-e2a8-437a-9a2f-6730c2ec3855",
+      "name": "IA desativada",
+      "credentials": {
+        "wahaApi": {
+          "id": "bAZ36vEA49PrXSZ1",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g",
+          "mode": "list",
+          "cachedResultName": "Controle Agente IA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J34-EL6CNtRJ3LYiSaDGdrD_VwtvNcW7-PidqZrMW8g/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "usuarios_ativos",
+              "lookupValue": "={{ $('WAHA Trigger').item.json.payload.from }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        240,
+        528
+      ],
+      "id": "5aa93e98-c0c3-420a-8f7e-cc1373a1a4e4",
+      "name": "Verificar ID2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Bvh3R0LiIiPJTlTU",
+          "name": "google conta treino"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1a129995-5fa1-42d0-a314-afdbc54e447c",
+              "leftValue": "= {{ $json.row_number.toString() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        592
+      ],
+      "id": "49755d1e-bc06-4e99-8db4-3bb7f59b3281",
+      "name": "ON"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# IDENTIDADE E PERSONA\n\nVocê é um Agente de IA autônomo, multifuncional e universal. Sua missão principal é ajudar os usuários a resolverem qualquer tipo de dúvida ou problema, de forma clara, precisa e empática. Você é um especialista em aprender, explicar e resolver.\n\n---\n\n# PRINCÍPIOS DE COMPORTAMENTO\n\n1.  **Clareza Acima de Tudo:** Sua prioridade número um é ser fácil de entender. Use analogias e metáforas para explicar conceitos complexos. Quebre problemas grandes em passos pequenos e lógicos.\n\n2.  **Empatia e Paciência:** Entenda que o usuário pode estar frustrado ou confuso. Seja sempre paciente, positivo e encorajador. Valide os sentimentos do usuário com frases como \"Entendo perfeitamente sua frustração\" ou \"Essa é uma excelente pergunta\".\n\n3.  **Precisão e Honestidade:** Se você sabe a resposta, seja direto e preciso. Se você não tem certeza, admita. É melhor dizer \"Não tenho certeza sobre isso, mas posso pesquisar para você\" do que inventar uma resposta. Nunca prometa algo que não pode cumprir.\n\n4.  **Foco na Solução:** Não se prenda ao problema. Guie ativamente o usuário em direção à próxima ação ou solução. Sempre termine suas respostas com uma pergunta clara que direcione para o próximo passo, como \"Faz sentido? O que gostaria de fazer agora?\" ou \"Podemos tentar isso juntos?\".\n\n5.  **Tom de Voz:** Seu tom é profissional, mas amigável. Você é um especialista confiável, mas também um parceiro colaborativo. Use \"nós\" e \"juntos\" para criar um senso de equipe (ex: \"Vamos resolver isso juntos\").\n\n---\n\n# DIRETRIZES DE EXECUÇÃO\n\n-   **Contexto é Rei:** Preste muita atenção ao histórico da conversa para entender o contexto completo do problema.\n-   **Seja Proativo:** Não espere que o usuário tenha todas as respostas. Antecipe as necessidades dele e sugira os próximos passos.\n-   **Estrutura da Resposta:** Comece validando a pergunta ou problema, depois forneça a explicação ou solução de forma estruturada (usando listas, se necessário), e sempre termine com uma pergunta ou sugestão de próxima ação.\n-   **Não Desvie:** Mantenha o foco no problema atual do usuário até que ele seja resolvido ou que o usuário decida mudar de assunto.\n\n---\n\n# CONTEXTO DA CONVERSA ATUAL\n\nAbaixo está o histórico da nossa conversa. A última mensagem é a pergunta atual do usuário que você deve responder.\n\n\nUsuário: {{ $('WAHA Trigger').item.json.payload.body }}\nSua Resposta:\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        560
+      ],
+      "id": "b08827d1-1922-4f6c-adab-2deee707a82e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        448,
+        880
+      ],
+      "id": "b24058f7-dea7-49e1-802f-49ee9662cc9a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uyWBj0NMMWOxWNRE",
+          "name": "conta treino"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WAHA Trigger').item.json.payload.from }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        672,
+        928
+      ],
+      "id": "ee5c4feb-e162-4eba-81f9-4b36d791f662",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "T3BlamOUBW25NNco",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "=default",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "text": "={{ $json.output }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1056,
+        576
+      ],
+      "id": "b2c0bc68-9322-4c63-838b-91b7eb4977be",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "bAZ36vEA49PrXSZ1",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        896,
+        928
+      ],
+      "id": "557d6afe-8b00-48a3-82ab-7e63f9e6f32c",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        912
+      ],
+      "id": "16bfbbd2-f945-4090-91b0-bff90454fde5",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "j3mt9Nz1uK265BIR",
+          "name": "SerpAPI account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "se Start",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "se Start": {
+      "main": [
+        [
+          {
+            "node": "Cadastrar ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "se End",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cadastrar ID": {
+      "main": [
+        [
+          {
+            "node": "IA ativada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "se End": {
+      "main": [
+        [
+          {
+            "node": "Verificar ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Verificar ID2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar ID": {
+      "main": [
+        [
+          {
+            "node": "Deletar ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deletar ID": {
+      "main": [
+        [
+          {
+            "node": "IA desativada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar ID2": {
+      "main": [
+        [
+          {
+            "node": "ON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ON": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b8599e6c-3fca-4fe2-a9ae-ff976832828d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e77e88edc922a8eb1867a7c0350fb999c8b928168cd074ff99dc72451e6da4f"
+  },
+  "id": "O9x22JOx1sjBFyul",
+  "tags": []
+}

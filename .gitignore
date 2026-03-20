@@ -1,0 +1,5 @@
+# Nunca subir pro GitHub!
+.env
+
+# Cópia de segurança
+docker-compose.backup.yml
