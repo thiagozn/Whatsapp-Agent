@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: n8n
+    runtime: docker
+    dockerfilePath: ./Dockerfile.n8n
+    plan: free
+    envVars:
+      - key: WEBHOOK_URL
+        sync: false
+      - key: N8N_HOST
+        sync: false
+      - key: GENERIC_TIMEZONE
+        value: America/Sao_Paulo
+      - key: N8N_LOG_LEVEL
+        value: debug
+      - key: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
+        value: true
+
+  - type: web
+    name: waha
+    runtime: docker
+    dockerfilePath: ./Dockerfile.waha
+    plan: free
+    envVars:
+      - key: WHATSAPP_HOOK_URL
+        sync: false
+      - key: WHATSAPP_DEFAULT_ENGINE
+        value: GOWS
+      - key: WHATSAPP_HOOK_EVENTS
+        value: message
+      - key: WAHA_API_KEY
+        sync: false
+      - key: WAHA_DASHBOARD_NO_PASSWORD
+        value: true
+      - key: WHATSAPP_SWAGGER_NO_PASSWORD
+        value: true
+
+databases:
+  - name: postgres
+    plan: free
+    databaseName: postgres
+    user: postgres
+
+  - name: redis
+    plan: free
