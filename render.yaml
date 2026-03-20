@@ -36,10 +36,10 @@ services:
         value: true
 
 databases:
-  - name: postgres
+  - name: n8n-postgres
     plan: free
-    databaseName: postgres
-    user: postgres
+    databaseName: n8ndb
+    user: n8nuser
 
   - name: redis
     plan: free
